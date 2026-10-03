@@ -32,6 +32,23 @@ app.get('/update-cobj', (req, res) => {
 // TODO: ROUTE 3 - Create a new app.post route for the custom objects form to create or update your custom object data. Once executed, redirect the user to the homepage.
 
 // * Code for Route 3 goes here
+app.post('/update-cobj', async (req, res) => {
+    const newPlant = {
+        properties: {
+            name: req.body.name,
+            species: req.body.species,
+            watering_frequency: req.body.watering_frequency
+        }
+    };
+
+    try {
+        await axios.post(PLANTS_URL, newPlant, { headers });
+        res.redirect('/');
+    } catch (error) {
+        console.error(error.response ? error.response.data : error);
+        res.status(500).send('Could not create the plant record.');
+    }
+});
 
 /** 
 * * This is sample code to give you a reference for how you should structure your calls. 
